@@ -19,38 +19,44 @@ public class Rotate : MonoBehaviour
 
     public List<RPS> items = new List<RPS>();
 
-    void Start()
+    private void Start()
     {
         lastAcceleration = Input.acceleration;
         lowPassValue = Input.acceleration;
     }
 
-    void Update()
+    private void Update()
     {
-        Vector3 rawAcceleration = Input.acceleration;
-        lowPassValue = Vector3.Lerp(lowPassValue, rawAcceleration, lowPassFilterFactor);
-        Vector3 deltaAcceleration = rawAcceleration - lowPassValue;
 
-        // Проверяем, превышает ли изменение ускорения пороговое значение
-        if (Mathf.Abs(deltaAcceleration.x) > tiltThreshold || Mathf.Abs(deltaAcceleration.y) > tiltThreshold || Mathf.Abs(deltaAcceleration.z) > tiltThreshold)
+        if(Mode.mode == 2)
         {
-            // Проверяем, прошло ли достаточно времени с последнего наклона
-            if (Time.time - lastTiltTime > tiltCooldown)
-            {
-                tiltCount++;
-                lastTiltTime = Time.time;
 
-                // Если телефон наклонили три раза, вызываем действие
-                if (tiltCount >= 3)
+            Vector3 rawAcceleration = Input.acceleration;
+            lowPassValue = Vector3.Lerp(lowPassValue, rawAcceleration, lowPassFilterFactor);
+            Vector3 deltaAcceleration = rawAcceleration - lowPassValue;
+
+            // Проверяем, превышает ли изменение ускорения пороговое значение
+            if (Mathf.Abs(deltaAcceleration.x) > tiltThreshold || Mathf.Abs(deltaAcceleration.y) > tiltThreshold || Mathf.Abs(deltaAcceleration.z) > tiltThreshold)
+            {
+                // Проверяем, прошло ли достаточно времени с последнего наклона
+                if (Time.time - lastTiltTime > tiltCooldown)
                 {
-                    int index = Random.Range(0, 3);
-                    OnThreeTilts(index);
-                    tiltCount = 0; // Сбрасываем счетчик
+                    tiltCount++;
+                    lastTiltTime = Time.time;
+
+                    // Если телефон наклонили три раза, вызываем действие
+                    if (tiltCount >= 3)
+                    {
+                        int index = Random.Range(0, 3);
+                        OnThreeTilts(index);
+                        tiltCount = 0; // Сбрасываем счетчик
+                    }
                 }
             }
+
+            lastAcceleration = rawAcceleration;
         }
 
-        lastAcceleration = rawAcceleration;
     }
 
     private void OnThreeTilts(int index)

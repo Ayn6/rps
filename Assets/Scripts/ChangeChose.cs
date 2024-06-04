@@ -16,6 +16,11 @@ public class ChangeChose : MonoBehaviour
         sprite.sprite = items[index].sprite;
         name.text = items[index].name;
 
+        if(Mode.mode == 0)
+        {
+            return;
+        }
+
         int i = Random.Range(0, 3);
 
         if (index > i)
