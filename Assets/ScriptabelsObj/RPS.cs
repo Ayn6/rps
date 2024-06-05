@@ -9,6 +9,5 @@ namespace DefultNamespace
         public string name;
         public Sprite sprite;
     }
-
 }
 

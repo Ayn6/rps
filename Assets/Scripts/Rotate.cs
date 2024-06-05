@@ -60,8 +60,10 @@ public class Rotate : MonoBehaviour
     }
 
     private void OnThreeTilts(int index)
-    {
+    {        
+        Handheld.Vibrate();
         sprite.sprite = items[index].sprite;
         name.text = items[index].name;
+
     }
 }

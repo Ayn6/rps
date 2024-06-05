@@ -1,12 +1,20 @@
-using System.Collections;
+using DefultNamespace;
+using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Mode : MonoBehaviour
 {
     private bool action = false;
     public static int mode = 0;
     [SerializeField] private GameObject gameObject;
+    [SerializeField] private GameObject Screen;
+
+    public List<ModeList> items = new List<ModeList>();
+
+    [SerializeField] private TextMeshProUGUI name;
 
     public void Open(GameObject gameObject)
     {
@@ -23,16 +31,9 @@ public class Mode : MonoBehaviour
 
     }
 
-    public void Change(int index)
+    public void Change(int i)
     {
-        mode = index;
-        if(index == 2)
-        {
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            gameObject.SetActive(true);
-        }
+        mode = items[i].index;
+        name.text = items[i].name;
     }
 }
