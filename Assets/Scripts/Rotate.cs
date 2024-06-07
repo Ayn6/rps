@@ -19,6 +19,7 @@ public class Rotate : MonoBehaviour
 
     public List<RPS> items = new List<RPS>();
 
+    [SerializeField] private GameObject gameEducation;
     private void Start()
     {
         lastAcceleration = Input.acceleration;
@@ -60,7 +61,8 @@ public class Rotate : MonoBehaviour
     }
 
     private void OnThreeTilts(int index)
-    {        
+    {
+        gameEducation.SetActive(false);
         Handheld.Vibrate();
         sprite.sprite = items[index].sprite;
         name.text = items[index].name;
